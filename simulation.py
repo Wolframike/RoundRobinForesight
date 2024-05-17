@@ -41,16 +41,22 @@ def simulation(root):
 	result = np.array([[XX if i != j else DD for j in range(N)] for i in range(N)])
 
 	# Result_linearをresultに変換
-	for i in range(N - 1):
-		for j in range(i + 1, N):
+	index = 0
+	for i in range(N):
+		for j in range(N):
 			if i == j:
 				continue
-			wins = int(result_linear[i * N + j][0])
-			losses = int(result_linear[i * N + j][2])
-			if wins == 0 and losses == 0:
+			print(f"{Abbr[i]} vs {Abbr[j]}: {result_linear[index]}")
+			score = result_linear[index]
+			won = int(score[0])
+			lost = int(score[2])
+			if won == 0 and lost == 0:
+				index += 1
 				continue
-			result[i][j] = wins
-			result[j][i] = losses
+			result[i][j] = won
+			result[j][i] = lost
+			index += 1
+
 
 	#クロステーブル確認
 	TableCheck(result, Abbr, N, BO, log_text_widget)
