@@ -1,29 +1,43 @@
 import numpy as np
 import sys
+from tkinter import messagebox
+from gui import print_log
 
-def TableCheck(result, Abbr, N, BO):
+def TableCheck(result, Abbr, N, BO, log_text_widget):
+	cell_size = 15  # Size of each cell
+
 	for i in range(N):
-		print("| ", end = "")
+		print("| ", end="")
 		for j in range(N):
+			cell_content = " " * int((cell_size - 5) / 2)
+
 			if result[i][j] == -1 and result[j][i] == -1:
-				print("    | ", end = "")
+				cell_content = " "
 			elif result[i][j] == -1 or result[j][i] == -1:
-				print()
-				raise ValueError(f"Only one side of the crosstable is filled: {Abbr[i]} vs {Abbr[j]}")
+				messagebox.showerror("Broken data", f"Only one side of the crosstable is filled on {Abbr[i]} vs {Abbr[j]}")
+				exit()
 			elif result[i][j] > ((BO + 1) / 2) or result[j][i] > ((BO + 1) / 2):
-				print()
-				raise ValueError(f"Map count exceeding given maximum: {Abbr[i]} vs {Abbr[j]}")
+				messagebox.showerror("Broken data", f"Invalid score on {Abbr[i]} vs {Abbr[j]}")
+				exit()
 			elif i != j:
-				print(f"{result[i][j]}-{result[j][i]} | ", end = "")
+				cell_content += f"{result[i][j]} - {result[j][i]}"
 			else:
-				print("--- | ", end = "")
+				cell_content += "-----"
+
+			# Pad the cell content to the desired size
+			print(f"{cell_content.ljust(cell_size)} | ", end="")
+			print_log(log_text_widget, f"{cell_content.ljust(cell_size)} | ", end="")
 		print(Abbr[i])
-	print("  ", end = "")
-	[print(i + " " * (6 - len(i)), end = "") for i in Abbr]
+		print_log(log_text_widget, Abbr[i])
+	print(" ", end="")
+	print_log(log_text_widget, " ", end="")
+	[print(i + " " * (cell_size + 3 - len(i)), end="") for i in Abbr]
+	[print_log(log_text_widget, i + " " * (cell_size + 3 - len(i)), end="") for i in Abbr]
 	print("\n")
-	
+	print_log(log_text_widget, "\n")
 
 def get_standings(result, N):
+
 	wins = [0] * N    # 勝利数
 	#勝数の計算
 	for i in range(N-1):
@@ -178,15 +192,15 @@ def randomscore(BO):
 	u = 0 # チームAの取得ラウンド
 	v = 0 # チームBの取得ラウンド
 	while True:
-		if u == (BO + 1)/2 or v == (BO + 1)/2:
+		if u == (BO + 1) / 2 or v == (BO + 1) / 2:
 			break # 試合結果が決まったらループを出る
 		
 		b = np.random.randint(1, 3)	# 1:チームAのラウンド取得, 2:チームBのラウンド取得
 		
 		if b == 1:
-			u+=1 # チームAのマップ勝利
+			u += 1 # チームAのマップ勝利
 		if b == 2:
-			v+=1 # チームBのマップ勝利
+			v += 1 # チームBのマップ勝利
 			
 	return u, v
 
@@ -214,14 +228,6 @@ def matchFill(result, remaining_match, BO, N):
 		standings = get_standings(result, N)
 		standings = sorted(standings, key = lambda x: tuple(-x[i] for i in range(2, max([len(i) for i in standings]))))
 		count = np.zeros((N, N + 1))
-
-		'''
-		Abbr = ["DFM","DRX","GEN","GE","PRX","RRQ","T1","TLN","TS","ZETA"]
-		
-		if standings[PLACEMENT][0] == Abbr.index("TEAMNAME"):
-			TableCheck(result, Abbr, N, BO)
-			print(standings)
-		'''
 		
 		for i in range(N):
 			count[standings[i][0]][i] += 1

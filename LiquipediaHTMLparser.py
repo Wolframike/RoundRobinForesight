@@ -1,8 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+from tkinter import messagebox
 
 # これまでの試合結果とチーム名を取得する関数
-def fetch_result(url, N):
+def fetch_result(url):
+	result = []
+	names = []
 	# チーム名を抽出する関数
 	def extract_teamnames(teamnames):
 		seen_names = set()
@@ -13,8 +16,6 @@ def fetch_result(url, N):
 				unique_names.append(name)
 				seen_names.add(name)
 
-		if len(unique_names) != N:
-			raise ValueError("Number of unique team names is not equal to N.")
 		return unique_names
 	
 	# URLからHTMLを取得
@@ -32,29 +33,22 @@ def fetch_result(url, N):
 		
 		# テーブルが存在する場合
 		if table:
-			# Extract text within <b> tags from the table
+			# テーブル内の<b>タグのテキストを取得、試合結果を抽出
 			match_result = [b.text for b in table.find_all('b')]
 
-			# Extract alt texts of <img> tags from the table
+			# テーブル内の<img>タグのalt属性を取得、チーム名を抽出
 			teamnames = [img['alt'] for img in table.find_all('img') if 'alt' in img.attrs]
-			
-			# Print the extracted text
-			print("Match Results:")
-			i = 0
-			for text in match_result:
-				print(text)
-				i += 1
-				if i % (N - 1) == 0:
-					print("------")
-			print("Team Names:")
-			teamnames = extract_teamnames(teamnames)
-			for name in teamnames:
-				print(name)
-		else:
-			print("No table found.")
-	else:
-		print("Failed to fetch URL. Status code:", response.status_code)
 
-# Example usage:
-url = "https://liquipedia.net/valorant/VCL/2023/Japan/Split_1/Regular_Season"  # Replace with the desired URL
-fetch_result(url, 8)
+			# 試合結果を抽出
+			for r in match_result:
+				result.append(r)
+			# チーム名を抽出
+			names = extract_teamnames(teamnames)
+		# テーブルが存在しない場合
+		else:
+			messagebox.showerror("Invalid URL", "No cross table found on the given URL.")
+	# リクエストが失敗した場合
+	else:
+		messagebox.showerror("Request Failed", "Failed to fetch data from the given URL with status code: " + str(response.status_code))
+	
+	return result, names
