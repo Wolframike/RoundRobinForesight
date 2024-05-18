@@ -2,13 +2,16 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 
 # URLを入力するためのGUIを作成
-def get_url(root):
+def gui(root):
 	# 文字列を格納するための変数
 	url_var = tk.StringVar()
 
 	# ドロップダウンメニューの選択肢を格納するための変数
-	selection_var = tk.StringVar()
-	selection_var.set("Light")  # Default selection
+	mode_var = tk.StringVar()
+	mode_var.set("Light")  # Default selection
+
+	bestof_var = tk.StringVar()
+	bestof_var.set("3")  # Default selection
 
 	# Submitボタンがクリックされたかどうかを格納する変数
 	submitted = False
@@ -31,18 +34,31 @@ def get_url(root):
 	entry = tk.Entry(root, width=50, textvariable=url_var)
 	entry.pack(pady=5)
 
-	dropdown_label = tk.Label(root, text="Select mode:")
-	dropdown_label.pack(pady=5)
-	dropdown = tk.OptionMenu(root, selection_var, "Light", "Heavy")
-	dropdown.pack(pady=5)
+	# ドロップダウンメニューフレーム
+	dropdown_frame = tk.Frame(root)
+	dropdown_frame.pack(pady=5)
+
+	mode_label = tk.Label(dropdown_frame, text="Simulation weight:")
+	mode_label.pack(side=tk.LEFT, padx=5)
+	mode_dropdown = tk.OptionMenu(dropdown_frame, mode_var, "Light", "Heavy")
+	mode_dropdown.pack(side=tk.LEFT, padx=5)
+
+	bestof_label = tk.Label(dropdown_frame, text="Best of:")
+	bestof_label.pack(side=tk.LEFT, padx=5)
+	bestof_dropdown = tk.OptionMenu(dropdown_frame, bestof_var, "3", "5")
+	bestof_dropdown.pack(side=tk.LEFT, padx=5)
+
+	# ボタンフレーム
+	button_frame = tk.Frame(root)
+	button_frame.pack(pady=5)
 
 	# Clipboardから貼り付けるボタン
-	paste_button = tk.Button(root, text="Paste and Go", command=paste_from_clipboard)
-	paste_button.pack(pady=5)
+	paste_button = tk.Button(button_frame, text="Paste and Go", command=paste_from_clipboard)
+	paste_button.pack(side=tk.LEFT, padx=5)
 
 	# Submitボタン
-	submit_button = tk.Button(root, text="Submit", command=on_submit)
-	submit_button.pack(pady=5)
+	submit_button = tk.Button(button_frame, text="Submit", command=on_submit)
+	submit_button.pack(side=tk.LEFT, padx=5)
 
 	log_text_widget = None  # Log text widget placeholder
 
@@ -75,7 +91,7 @@ def get_url(root):
 			log_text_widget = tk.Text(root, height=20, width=80, font=("Courier New", 16), spacing1=5, spacing2=5, spacing3=5, padx=10, pady=10)
 			log_text_widget.pack(pady=5, expand=True, fill=tk.BOTH)
 
-			return url, selection_var.get() == "Heavy", log_text_widget, progress_bar # Return the URL and log widget if valid
+			return url, mode_var.get() == "Heavy", int(bestof_var.get()), log_text_widget, progress_bar # Return the URL and log widget if valid
 
 def print_log(log_text_widget, message, end="\n"):
 	if log_text_widget:

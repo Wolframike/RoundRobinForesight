@@ -3,7 +3,9 @@ import sys
 from tkinter import messagebox
 from gui import print_log
 
-def TableCheck(result, Abbr, N, BO, log_text_widget):
+def table_check(result, 
+Abbr, N, BO, log_text_widget):
+	print("erthewsgvsg")
 	cell_size = 15  # Size of each cell
 
 	for i in range(N):
@@ -12,17 +14,17 @@ def TableCheck(result, Abbr, N, BO, log_text_widget):
 			cell_content = " " * int((cell_size - 5) / 2)
 
 			if result[i][j] == -1 and result[j][i] == -1:
-				cell_content = " "
-			elif result[i][j] == -1 or result[j][i] == -1:
-				messagebox.showerror("Broken data", f"Only one side of the crosstable is filled on {Abbr[i]} vs {Abbr[j]}")
-				exit()
-			elif result[i][j] > ((BO + 1) / 2) or result[j][i] > ((BO + 1) / 2):
-				messagebox.showerror("Broken data", f"Invalid score on {Abbr[i]} vs {Abbr[j]}")
-				exit()
-			elif i != j:
-				cell_content += f"{result[i][j]} - {result[j][i]}"
-			else:
+				pass
+			elif i == j:
 				cell_content += "-----"
+			elif result[i][j] == -1 or result[j][i] == -1:
+				messagebox.showerror("Broken data", f"\nOnly one side of the crosstable is filled on:\n{Abbr[i]} vs {Abbr[j]}")
+				exit()
+			elif result[i][j] != ((BO + 1) / 2) and result[j][i] != ((BO + 1) / 2):
+				messagebox.showerror("Broken data", f"\nInvalid score on:\n{Abbr[i]} vs {Abbr[j]}")
+				exit()
+			else:
+				cell_content += f"{result[i][j]} - {result[j][i]}"
 
 			# Pad the cell content to the desired size
 			print(f"{cell_content.ljust(cell_size)} | ", end="")

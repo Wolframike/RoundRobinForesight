@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 if __name__ == "__main__":
 	root = tk.Tk()
-	root.title("Round Robin Score Prediction Tool")
+	root.title("RoundRobinForesight")
 	root.geometry("1600x1200+500+200")  # Set initial size and position
 	root.resizable(False, False)  # Make the window size unchangeable
 

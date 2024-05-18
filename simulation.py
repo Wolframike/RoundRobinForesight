@@ -7,19 +7,16 @@ from gui import *
 from LiquipediaHTMLparser import *
 from utils import *
 
+# 出力時の幅
+w = 13
+
+# 繰上げ桁
+r = w - 4
+
 def simulation(root):
-	# Best of
-	BO = 3
-
-	# 出力時の幅
-	w = 13
-
-	# 繰上げ桁
-	r = w - 4
-
 	# URL取得
 	try:
-		url, heavy, log_text_widget, progress_bar = get_url(root)
+		url, heavy, BO, log_text_widget, progress_bar = gui(root)
 	except:
 		return
 	if url == None:
@@ -59,7 +56,7 @@ def simulation(root):
 
 
 	#クロステーブル確認
-	TableCheck(result, Abbr, N, BO, log_text_widget)
+	table_check(result, Abbr, N, BO, log_text_widget)
 
 	# それぞれのチームがどの順位になったかをカウント
 	count = np.zeros((N, N + 1))
