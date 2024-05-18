@@ -5,8 +5,7 @@ from gui import print_log
 
 def table_check(result, 
 Abbr, N, BO, log_text_widget):
-	print("erthewsgvsg")
-	cell_size = 15  # Size of each cell
+	cell_size = 15
 
 	for i in range(N):
 		print("| ", end="")
@@ -26,7 +25,7 @@ Abbr, N, BO, log_text_widget):
 			else:
 				cell_content += f"{result[i][j]} - {result[j][i]}"
 
-			# Pad the cell content to the desired size
+			# セルの大きさに合わせて空白を追加
 			print(f"{cell_content.ljust(cell_size)} | ", end="")
 			print_log(log_text_widget, f"{cell_content.ljust(cell_size)} | ", end="")
 		print(Abbr[i])
@@ -205,25 +204,6 @@ def randomscore(BO):
 			v += 1 # チームBのマップ勝利
 			
 	return u, v
-
-def settings():
-	# 試行回数設定
-	
-	l = 5000 # 5000
-	DIV = 40 # 40
-	while True:
-		horl = input("Heavy simulation or light? (h/l): ")
-		if horl == "h" or horl == "l": break
-
-	if horl == "h":
-		l = 1000000
-		DIV = 100
-
-	# シミュレーション
-	GAP = (DIV - 24) // 4
-	print("0 %/" + "-" * GAP + "/25%/" + "-" * GAP + "/50%/" + "-" * GAP + "/75%/" + "-" * GAP + "/100%")
-
-	return (l, DIV)
 	
 def matchFill(result, remaining_match, BO, N):
 	if remaining_match == []:

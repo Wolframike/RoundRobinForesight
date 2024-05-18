@@ -8,10 +8,10 @@ def gui(root):
 
 	# ドロップダウンメニューの選択肢を格納するための変数
 	mode_var = tk.StringVar()
-	mode_var.set("Light")  # Default selection
+	mode_var.set("Light") # デフォルトの選択肢
 
 	bestof_var = tk.StringVar()
-	bestof_var.set("3")  # Default selection
+	bestof_var.set("3")  # デフォルトの選択肢
 
 	# Submitボタンがクリックされたかどうかを格納する変数
 	submitted = False
@@ -38,11 +38,13 @@ def gui(root):
 	dropdown_frame = tk.Frame(root)
 	dropdown_frame.pack(pady=5)
 
+	# シミュレーション回数
 	mode_label = tk.Label(dropdown_frame, text="Simulation weight:")
 	mode_label.pack(side=tk.LEFT, padx=5)
 	mode_dropdown = tk.OptionMenu(dropdown_frame, mode_var, "Light", "Heavy")
 	mode_dropdown.pack(side=tk.LEFT, padx=5)
 
+	# BOいくつ？
 	bestof_label = tk.Label(dropdown_frame, text="Best of:")
 	bestof_label.pack(side=tk.LEFT, padx=5)
 	bestof_dropdown = tk.OptionMenu(dropdown_frame, bestof_var, "3", "5")
@@ -72,7 +74,7 @@ def gui(root):
 
 		# Submitボタンがクリックされていない場合
 		if not submitted:
-			return None  # Return None if the window was closed
+			return None
 
 		# URLが空文字か、LiquipediaのURLでない場合
 		if url == "" or not url.startswith("https://liquipedia.net"):
@@ -81,11 +83,11 @@ def gui(root):
 			submitted = False
 		# 正しいURLが入力された場合
 		else:
-			# Create a progress bar
+			# プログレスバー
 			progress_bar = ttk.Progressbar(root, orient="horizontal", length=800, mode="determinate", maximum=97.5)
 			progress_bar.pack(pady=10)
 
-			# Create a massive log text field
+			# ログ表示用のテキストウィジェット
 			log_label = tk.Label(root, text="Results")
 			log_label.pack(pady=10)
 			log_text_widget = tk.Text(root, height=20, width=80, font=("Courier New", 16), spacing1=5, spacing2=5, spacing3=5, padx=10, pady=10)
@@ -93,6 +95,7 @@ def gui(root):
 
 			return url, mode_var.get() == "Heavy", int(bestof_var.get()), log_text_widget, progress_bar # Return the URL and log widget if valid
 
+# ログを表示するための関数
 def print_log(log_text_widget, message, end="\n"):
 	if log_text_widget:
 		log_text_widget.config(state=tk.NORMAL)
@@ -102,6 +105,7 @@ def print_log(log_text_widget, message, end="\n"):
 	else:
 		messagebox.showerror("Log Error", "Log widget not initialized")
 
+# プログレスバーを更新するための関数
 def update_progress(progress_bar, value):
 	if progress_bar:
 		progress_bar.configure(value=value)

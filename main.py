@@ -5,8 +5,8 @@ from tkinter import messagebox
 if __name__ == "__main__":
 	root = tk.Tk()
 	root.title("RoundRobinForesight")
-	root.geometry("1600x1200+500+200")  # Set initial size and position
-	root.resizable(False, False)  # Make the window size unchangeable
+	root.geometry("1600x1200+500+200")
+	root.resizable(False, False)
 
 	def on_closing():
 		if messagebox.askokcancel("Quit", "Do you want to quit?"):
