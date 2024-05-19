@@ -1,7 +1,7 @@
 # RoundRobinForesight
 
 ## About
-RoundRobinForesight is a Python project designed to calculate the probability of final placements in a round-robin tournament. This tool is tailored specifically for VALORANT esports, providing detailed probabilistic insights based on match outcomes.
+RoundRobinForesight is a Python project designed to calculate the probability of final placements in a round-robin tournament. This tool is tailored specifically for VALORANT esports　and designed to fetch necessary data from Liquipedia, providing detailed probabilistic insights based on match outcomes.
 
 ![RRF](https://github.com/Wolframike/RoundRobinForesight/assets/145457464/baa2cf42-bd98-4393-b3cb-90ae01a34a81)
 |:--:| 
@@ -33,14 +33,14 @@ RoundRobinForesight is a Python project designed to calculate the probability of
 
 ### VCT 2023 Americas Ruleset
 
-4チーム以上対象のタイブレイカールールがほとんどのリージョンで存在しない為、やむおえずVCT・VALORANT Challengers内ではラウンドロビンのフォーマットは統一されているという仮定の下このルールを使用しています。
-
-ルールの詳細については以下のリンクから
-
----
-
 As very few regions provide tiebreaker rules for ties between 4+ teams, I have decided to refer to the VCT Americas 2023 ruleset, assuming that the round-robin ruleset is unified across regions and leagues.
 
 For detailed rules and policies, refer to the link below
+
+---
+
+4チーム以上対象のタイブレイカールールがほとんどのリージョンで存在しない為、やむおえずVCT・VALORANT Challengers内ではラウンドロビンのフォーマットは統一されているという仮定の下このルールを使用しています。
+
+ルールの詳細については以下のリンクから
 
 **[Americas Rules and Policies 2023](https://www.dropbox.com/sh/xfy0lbve0hdr0ju/AAB0_AhrZQmhr4_HDOBQKK8Qa/Rules%20and%20Policies%202023/Americas%20Rules%20and%20Policies%202023?e=1&preview=VCT+Americas+Event-Specific+Ruleset+(v23.2).pdf&subfolder_nav_tracking=1&dl=0)**
