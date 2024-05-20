@@ -1,4 +1,4 @@
-# RoundRobinForesight
+# Wolfram's RoundRobinForesight
 
 ## About
 RoundRobinForesight is a Python project designed to calculate the probability of final placements in a round-robin tournament. This tool is tailored specifically for VALORANT esports and designed to fetch necessary data from Liquipedia, providing detailed probabilistic insights based on match outcomes.
